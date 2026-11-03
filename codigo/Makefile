@@ -3,12 +3,12 @@ CFLAGS = -Wall -Wextra -O2 -D__USE_MINGW_ANSI_STDIO=1
 
 all: inventario
 
-inventario: codigo/principal.c codigo/lista.c codigo/inventario.h
-	$(CC) $(CFLAGS) -o inventario codigo/principal.c codigo/lista.c
+inventario: principal.c lista.c inventario.h
+	$(CC) $(CFLAGS) -o inventario principal.c lista.c
 
 pruebas: inventario
 	@fallos=0; \
-	for f in pruebas/*.in; do \
+	for f in ../datos/*.in; do \
 	esperado=$${f%.in}.out; \
 	./inventario < $$f > salida_tmp.txt; \
 	if diff -q --strip-trailing-cr salida_tmp.txt $$esperado > /dev/null; then \
@@ -20,7 +20,7 @@ pruebas: inventario
 	rm -f salida_tmp.txt; \
 	exit $$fallos
 
-limpiar:
+clean:
 	rm -f inventario inventario.exe salida_tmp.txt
 
-.PHONY: all pruebas limpiar
+.PHONY: all pruebas clean
