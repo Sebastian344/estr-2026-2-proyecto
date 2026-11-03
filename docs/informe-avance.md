@@ -78,10 +78,10 @@ salida de ambas por código antes de escribirla.
 
 | Caso | Entrada | Salida esperada | Salida obtenida |
 |---|---|---|---|
-| funcional 1 | ejemplo del enunciado (7 órdenes con arroz y azúcar) | `ok`, `ok`, `1004512 arroz 20`, `ok`, `1004498 azucar 15`, `ok`, `no existe` | |
-| funcional 2 | `AGREGAR 1 sal 5`, `AGREGAR 1 pan 3`, `CONSULTAR 1` | `ok`, `repetido`, `1 sal 5` | |
-| funcional 3 | `REPONER 9 4`, `ELIMINAR 9`, `CONSULTAR 9` | `no existe`, `no existe`, `no existe` | |
-| límite | `LISTAR` con el inventario vacío | no escribe nada | |
+| funcional 1 | ejemplo del enunciado (7 órdenes con arroz y azúcar) | `ok`, `ok`, `1004512 arroz 20`, `ok`, `1004498 azucar 15`, `ok`, `no existe` | `ok`, `ok`, `1004512 arroz 20`, `ok`, `1004498 azucar 15`, `ok`, `no existe` |
+| funcional 2 | `AGREGAR 1 sal 5`, `AGREGAR 1 pan 3`, `CONSULTAR 1` | `ok`, `repetido`, `1 sal 5` | `AGREGAR 1 sal 5`, `AGREGAR 1 pan 3`, `CONSULTAR 1` | `ok`, `repetido`, `1 sal 5` |
+| funcional 3 | `REPONER 9 4`, `ELIMINAR 9`, `CONSULTAR 9` | `no existe`, `no existe`, `no existe` | `REPONER 9 4`, `ELIMINAR 9`, `CONSULTAR 9` | `no existe`, `no existe`, `no existe` |
+| límite | `LISTAR` con el inventario vacío | no escribe nada | No escribio nada |
 
 Escogi el inventario vacío como caso límite porque es el estado inicial de la estructura y el que más fácil rompe una implementación: `LISTAR` debe recorrer cero nodos sin fallar y sin escribir nada.
 
