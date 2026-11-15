@@ -9,7 +9,7 @@
 
 typedef struct Nodo
 {
-    long long c;
+    long long codigo;
     char nombre[Largo_nombre];
     int cantidad;
     struct Nodo *siguiente;
@@ -30,17 +30,17 @@ Inventario *inv_crear(void){
 }
 
 
-static Nodo *buscar(const Inventario *inv, long long c){
+static Nodo *buscar(const Inventario *inv, long long codigo){
     Nodo *p = inv->cabeza;
-    while (p != NULL && p->c != c){
+    while (p != NULL && p->codigo != codigo){
         p = p->siguiente;
     }
     return p;
 }
 
-int inv_consultar(const Inventario *inv,long long c, char *nombre, int *cantidad){
+int inv_consultar(const Inventario *inv,long long codigo, char *nombre, int *cantidad){
     int resultado;
-    Nodo *n =buscar(inv ,c);
+    Nodo *n =buscar(inv ,codigo);
     if (n==NULL)resultado=INV_NO_EXISTE;
     else{
         strncpy(nombre,n->nombre,Largo_nombre-1);
@@ -51,9 +51,9 @@ int inv_consultar(const Inventario *inv,long long c, char *nombre, int *cantidad
     return resultado;
 }
 
-int inv_reponer(Inventario *inv, long long c,int cantidad){
+int inv_reponer(Inventario *inv, long long codigo,int cantidad){
     int resultado;
-    Nodo *n = buscar(inv,c);
+    Nodo *n = buscar(inv,codigo);
     if (n == NULL)resultado = INV_NO_EXISTE;
     else{
         n->cantidad += cantidad;
@@ -62,16 +62,16 @@ int inv_reponer(Inventario *inv, long long c,int cantidad){
     return resultado;
 }
 
-int inv_agregar(Inventario *inv, long long c, const char *nombre, int cantidad){
+int inv_agregar(Inventario *inv, long long codigo, const char *nombre, int cantidad){
     int resultado;
-    if (buscar(inv, c) != NULL)resultado = INV_REPETIDO;
+    if (buscar(inv, codigo) != NULL)resultado = INV_REPETIDO;
     else{
         Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
         if (nuevo == NULL){
             resultado = INV_SIN_MEMORIA;
         }
         else{
-            nuevo->c = c;
+            nuevo->codigo = codigo;
             strncpy(nuevo-> nombre,nombre,Largo_nombre - 1);
             nuevo->nombre[Largo_nombre -1]='\0';
             nuevo->cantidad = cantidad;
@@ -89,12 +89,12 @@ int inv_agregar(Inventario *inv, long long c, const char *nombre, int cantidad){
     return resultado;
 }
 
-int inv_eliminar(Inventario *inv,long long c){
+int inv_eliminar(Inventario *inv,long long codigo){
     int resultado;
     Nodo *ant = NULL;
     Nodo *act = inv->cabeza;
 
-    while (act != NULL && act->c != c){
+    while (act != NULL && act->codigo != codigo){
         ant = act;
         act = act->siguiente;
     }
@@ -111,7 +111,7 @@ int inv_eliminar(Inventario *inv,long long c){
 void inv_listar(const Inventario *inv,FILE *salida){
     Nodo *p = inv->cabeza;
     while (p != NULL){
-        fprintf(salida,"%lld %s %d\n",p->c,p->nombre,p->cantidad);
+        fprintf(salida,"%lld %s %d\n",p->codigo,p->nombre,p->cantidad);
         p=p->siguiente;
     }
 }
