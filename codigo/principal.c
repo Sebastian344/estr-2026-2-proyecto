@@ -19,10 +19,12 @@ int main(void) {
       char nombre[Largo_nombre];
       int cantidad;
       int r;
-      scanf("%63s",orden);
+      scanf("%15s",orden);
+
+      
 
       if (strcmp(orden,"AGREGAR")==0){
-        scanf("%lld %63s %d",&codigo,nombre, &cantidad);
+        scanf("%lld %15s %d",&codigo,nombre, &cantidad);
         r = inv_agregar(inv,codigo,nombre,cantidad);
         if(r==INV_OK)printf("ok\n");
         else if (r== INV_REPETIDO)printf("repetido\n");
