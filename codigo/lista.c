@@ -3,128 +3,70 @@
 #include <stdio.h>
 #include<string.h>
 #include <stdlib.h>
-#include "inventario.h"
+#include "lista.h"
 
-
-
-typedef struct Nodo
-{
-    long long codigo;
-    char nombre[Largo_nombre];
-    int cantidad;
-    struct Nodo *siguiente;
-
-}Nodo;
-
-struct Inventario{
-    Nodo *cabeza;
-};
-
-
-Inventario *inv_crear(void){
-    Inventario *inv = (Inventario *)malloc(sizeof(Inventario));
-    if (inv != NULL){
-        inv->cabeza = NULL;
-    }
-    return inv;
-}
-
-
-static Nodo *buscar(const Inventario *inv, long long codigo){
-    Nodo *p = inv->cabeza;
+Nodo *lista_buscar(Nodo *cabeza, long long codigo){
+    Nodo *p = cabeza;
     while (p != NULL && p->codigo != codigo){
         p = p->siguiente;
     }
     return p;
 }
 
-int inv_consultar(const Inventario *inv,long long codigo, char *nombre, int *cantidad){
+int lista_agregar(Nodo **cabeza, long long codigo, const char *nombre, int cantidad){
     int resultado;
-    Nodo *n =buscar(inv ,codigo);
-    if (n==NULL)resultado=INV_NO_EXISTE;
-    else{
-        strncpy(nombre,n->nombre,Largo_nombre-1);
-        nombre[Largo_nombre-1] = '\0';
-        *cantidad = n->cantidad;
-        resultado = INV_OK;
+    Nodo **p = cabeza ;
+    while (*p != NULL && (*p)->codigo != codigo){
+        p = &(*p)->siguiente;
     }
-    return resultado;
-}
-
-int inv_reponer(Inventario *inv, long long codigo,int cantidad){
-    int resultado;
-    Nodo *n = buscar(inv,codigo);
-    if (n == NULL)resultado = INV_NO_EXISTE;
-    else{
-        n->cantidad += cantidad;
-        resultado = INV_OK;
-    }
-    return resultado;
-}
-
-int inv_agregar(Inventario *inv, long long codigo, const char *nombre, int cantidad){
-    int resultado;
-    if (buscar(inv, codigo) != NULL)resultado = INV_REPETIDO;
+    
+    if (*p != NULL)resultado = INV_REPETIDO;
     else{
         Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
-        if (nuevo == NULL){
-            resultado = INV_SIN_MEMORIA;
-        }
+        if (nuevo == NULL)resultado=INV_SIN_MEMORIA;
         else{
-            nuevo->codigo = codigo;
-            strncpy(nuevo-> nombre,nombre,Largo_nombre - 1);
-            nuevo->nombre[Largo_nombre -1]='\0';
-            nuevo->cantidad = cantidad;
-            nuevo->siguiente = NULL;
-
-            if (inv->cabeza == NULL)inv->cabeza=nuevo;
-            else{
-                Nodo *p = inv->cabeza;
-                while (p->siguiente !=NULL)p = p->siguiente;
-                p->siguiente = nuevo;
-            }
-            resultado = INV_OK;
-        }
+        nuevo->codigo = codigo;
+        strncpy(nuevo-> nombre,nombre,Largo_nombre - 1);
+        nuevo->nombre[Largo_nombre -1]='\0';
+        nuevo->cantidad = cantidad;
+        nuevo->siguiente = NULL;
+        *p = nuevo;
+        resultado = INV_OK;}
     }
     return resultado;
 }
 
-int inv_eliminar(Inventario *inv,long long codigo){
+int lista_eliminar(Nodo **cabeza, long long codigo){
     int resultado;
-    Nodo *ant = NULL;
-    Nodo *act = inv->cabeza;
-
-    while (act != NULL && act->codigo != codigo){
-        ant = act;
-        act = act->siguiente;
+    Nodo **p = cabeza;
+    while (*p != NULL && (*p)->codigo != codigo){
+        p = &(*p)->siguiente;
     }
-    if (act == NULL)resultado=INV_NO_EXISTE;
-    else{
-        if (ant == NULL)inv->cabeza = act ->siguiente;
-        else{ant->siguiente = act->siguiente;}
-        free(act);
-        resultado=INV_OK;
+    if(*p ==NULL)resultado = INV_NO_EXISTE;
+    else {
+        Nodo *borrar = *p;
+        *p = borrar->siguiente;
+        free(borrar);
+        resultado = INV_OK;
     }
     return resultado;
 }
 
-void inv_listar(const Inventario *inv,FILE *salida){
-    Nodo *p = inv->cabeza;
+
+void lista_imprimir ( const Nodo *cabeza, FILE *salida){
+    const Nodo *p = cabeza;
     while (p != NULL){
-        fprintf(salida,"%lld %s %d\n",p->codigo,p->nombre,p->cantidad);
-        p=p->siguiente;
+        fprintf(salida, "%lld %s %d\n", p->codigo, p->nombre, p->cantidad);
+        p = p->siguiente;
     }
 }
 
-void inv_destruir(Inventario *inv){
-    if (inv != NULL){
-        Nodo *p = inv->cabeza;
-    
-    while(p != NULL){
+void lista_destruir(Nodo **cabeza){
+    Nodo *p = *cabeza;
+    while (p != NULL){
         Nodo *siguiente = p->siguiente;
         free(p);
         p = siguiente;
-        }
-    }   
-    free(inv);
+    }
+    *cabeza = NULL;
 }
