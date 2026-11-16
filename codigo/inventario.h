@@ -10,7 +10,7 @@ enum { INV_OK = 0, INV_REPETIDO = 1, INV_NO_EXISTE = 2, INV_SIN_MEMORIA = 3 };
 
 typedef struct Inventario Inventario;
 
-Inventario *inv_crear(void);
+Inventario *inv_crear(int m);
 void inv_destruir(Inventario *inv);
 int inv_agregar(Inventario *inv, long long codigo, const char *nombre, int cantidad);
 int inv_eliminar(Inventario *inv, long long codigo);
