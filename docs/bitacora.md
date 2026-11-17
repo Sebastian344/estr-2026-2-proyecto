@@ -1,5 +1,15 @@
 # Bitácora
 
+## 2026-11-16
+
+- Qué hicimos:Se realizo los archivos medir.c y medir_map.cpp, se construyo la tabla, se redacto el informe final, se construyo el script para hacer las mediciones requeridas para comparar las estructuras en el informe y se corrigieron errores varios que habia en principal que hacian que se formara un bucle infinito
+- Qué quedó pendiente:Nada
+
+## 2026-11-15
+
+- Qué hicimos:empece a construir la nueva estructura de lista que sirva tnato para una lista enlazada como para la tabla. Se corrigio errores mencionados en los comentarios del avance
+- Qué quedó pendiente:construir la tabla, informe final y mediciones
+
 ## 2026-11-2
 
 - Quiénes:Sebastian Pulgarin
@@ -19,3 +29,5 @@
 - Quiénes:Sebastian Pulgarin
 - Qué hicimos:Creacion del fork del repositorio, modificacion del readme y se lleno el informe del proyecto
 - Qué quedó pendiente:todo lo relacionado a codigo y corregir y completar algunos detalles del informe
+
+
