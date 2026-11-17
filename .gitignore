@@ -2,3 +2,11 @@ inventario
 inventario.exe
 *.o
 salida_tmp.txt
+inventario_lista
+inventario_tabla
+medir_lista
+medir_tabla
+medir_map
+*.exe
+*.o
+salida_tmp.txt

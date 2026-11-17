@@ -9,6 +9,17 @@ inventario_lista: codigo/principal.c codigo/lista.c codigo/inventario_lista.c co
 inventario_tabla: codigo/principal.c codigo/lista.c codigo/tabla.c codigo/lista.h codigo/inventario.h
 	$(CC) $(CFLAGS) -o inventario_tabla codigo/principal.c codigo/lista.c codigo/tabla.c
 
+medir_lista: codigo/medir.c codigo/lista.c codigo/inventario_lista.c codigo/lista.h codigo/inventario.h
+	$(CC) $(CFLAGS) -o medir_lista codigo/medir.c codigo/lista.c codigo/inventario_lista.c
+
+medir_tabla: codigo/medir.c codigo/lista.c codigo/tabla.c codigo/lista.h codigo/inventario.h
+	$(CC) $(CFLAGS) -o medir_tabla codigo/medir.c codigo/lista.c codigo/tabla.c
+
+medir_map: codigo/medir_map.cpp
+	g++ -Wall -Wextra -O2 -o medir_map codigo/medir_map.cpp
+
+medir: medir_lista medir_tabla medir_map
+
 pruebas: all
 	@fallo=0; \
 	for exe in inventario_lista inventario_tabla; do \
@@ -24,6 +35,6 @@ pruebas: all
 	exit $$fallo
 
 limpiar:
-	rm -f inventario_lista inventario_tabla *.exe salida_tmp.txt
+	rm -f inventario_lista inventario_tabla medir_lista medir_tabla medir_map *.exe salida_tmp.txt
 
-.PHONY: all pruebas limpiar
+.PHONY: all pruebas limpiar medir
