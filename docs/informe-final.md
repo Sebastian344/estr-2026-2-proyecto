@@ -4,11 +4,13 @@
 
 ## 1. El escenario y el modelado
 
-(Del avance, corregido.)
+Un inventario de articulos (codigo `long long`, nombre de una palabra, cantidad `int`) con las ordenes `AGREGAR`, `ELIMINAR`, `CONSULTAR`, `REPONER` y `LISTAR`. El avance usaba una lista enlazada simple con busqueda lineal por codigo. Este informe compara ese avance con una tabla de $m$ listas, una por cubeta, y con `std::map` como referencia.
 
 ## 2. Las dos estructuras
 
-(Qué operaciones expone cada una y por qué la interfaz es la misma.)
+| Archivo | Contenido |
+|---|---|
+|
 
 ## 3. Análisis formal de complejidad
 
